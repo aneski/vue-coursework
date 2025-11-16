@@ -1,66 +1,106 @@
 [
   {
-    "id": "coding-lab",
-    "title": "Creative Coding Lab",
-    "description": "Build playful mini-apps with JavaScript fundamentals and design-first thinking.",
+    "subject": "Algebra II",
+    "description": "Strengthen quadratic, exponential, and polynomial problem solving with guided practice.",
+    "location": "Room 204",
+    "price": 38,
+    "spaces": 5,
+    "image": "../assets/subjects/algebra.svg"
+  },
+  {
+    "subject": "Biology Lab",
+    "description": "Microscope investigations and hands-on dissections bring cellular biology to life.",
+    "location": "Science Lab B",
+    "price": 42,
+    "spaces": 5,
+    "image": "../assets/subjects/biology.svg"
+  },
+  {
+    "subject": "Chemistry Honors",
+    "description": "Explore reactions, stoichiometry, and lab safety through weekly experiments.",
+    "location": "Chemistry Lab",
+    "price": 44,
+    "spaces": 5,
+    "image": "../assets/subjects/chemistry.svg"
+  },
+  {
+    "subject": "Physics Workshop",
+    "description": "Build intuition with motion labs, energy challenges, and robotics tie-ins.",
     "location": "Innovation Studio",
-    "spaces": 12,
-    "image": "💡"
+    "price": 46,
+    "spaces": 5,
+    "image": "../assets/subjects/physics.svg"
   },
   {
-    "id": "story-champs",
-    "title": "Storytelling Champs",
-    "description": "Craft short stories and zines while exploring tone, pacing, and illustration.",
-    "location": "Media Loft",
-    "spaces": 9,
-    "image": "📚"
+    "subject": "English Literature",
+    "description": "Close-read classics and craft analytical essays with peer feedback circles.",
+    "location": "Library Commons",
+    "price": 36,
+    "spaces": 5,
+    "image": "../assets/subjects/english-literature.svg"
   },
   {
-    "id": "makers-lab",
-    "title": "Mini Makers Lab",
-    "description": "Hands-on building sessions using cardboard engineering and simple circuits.",
-    "location": "Fabrication Hub",
-    "spaces": 10,
-    "image": "🛠️"
+    "subject": "World History",
+    "description": "Trace global movements and debate key decisions from ancient to modern eras.",
+    "location": "Room 112",
+    "price": 34,
+    "spaces": 5,
+    "image": "../assets/subjects/world-history.svg"
   },
   {
-    "id": "kitchen-chem",
-    "title": "Kitchen Chemistry",
-    "description": "Tasty science demos that explain reactions using everyday ingredients.",
-    "location": "Test Kitchen",
-    "spaces": 8,
-    "image": "🧪"
+    "subject": "Computer Science Principles",
+    "description": "Design algorithms, code interactive apps, and explore ethical computing.",
+    "location": "Tech Lab",
+    "price": 48,
+    "spaces": 5,
+    "image": "../assets/subjects/computer-science.svg"
   },
   {
-    "id": "movement-mix",
-    "title": "Movement Mix",
-    "description": "Blend yoga, hip-hop, and stretching sequences for balance and expression.",
-    "location": "Dance Loft",
-    "spaces": 14,
-    "image": "🎶"
+    "subject": "French Conversation",
+    "description": "Level up vocabulary with roleplay, cultural immersion, and listening drills.",
+    "location": "Language Studio",
+    "price": 33,
+    "spaces": 5,
+    "image": "../assets/subjects/french.svg"
   },
   {
-    "id": "art-sprint",
-    "title": "Art Sprint Studio",
-    "description": "Rapid-fire prompts challenge students to sketch bold concepts in minutes.",
-    "location": "Atelier 3",
-    "spaces": 11,
-    "image": "🎨"
+    "subject": "Studio Art",
+    "description": "Experiment with charcoal, acrylics, and mixed media in portfolio-ready projects.",
+    "location": "Art Atelier",
+    "price": 40,
+    "spaces": 5,
+    "image": "../assets/subjects/studio-art.svg"
   },
   {
-    "id": "robot-rally",
-    "title": "Robot Rally",
-    "description": "Team up to prototype bots that navigate colorful obstacle courses.",
-    "location": "Robotics Arena",
-    "spaces": 7,
-    "image": "🤖"
+    "subject": "Music Ensemble",
+    "description": "Rehearse contemporary charts and tighten performance skills as a chamber group.",
+    "location": "Music Room",
+    "price": 37,
+    "spaces": 5,
+    "image": "../assets/subjects/music.svg"
   },
   {
-    "id": "garden-chefs",
-    "title": "Garden Chefs",
-    "description": "Grow herbs, harvest greens, and cook vibrant snacks from the garden.",
-    "location": "Learning Garden",
-    "spaces": 13,
-    "image": "🌱"
+    "subject": "AP Economics",
+    "description": "Simulate markets and unpack fiscal policy with data-driven case studies.",
+    "location": "Room 305",
+    "price": 45,
+    "spaces": 5,
+    "image": "../assets/subjects/economics.svg"
+  },
+  {
+    "subject": "Health & Wellness",
+    "description": "Blend nutrition, mindfulness, and fitness planning for balanced living.",
+    "location": "Wellness Center",
+    "price": 32,
+    "spaces": 5,
+    "image": "../assets/subjects/health.svg"
+  },
+  {
+    "subject": "Environmental Science",
+    "description": "Investigate ecosystems, sustainability challenges, and field data collection.",
+    "location": "Greenhouse Lab",
+    "price": 41,
+    "spaces": 5,
+    "image": "../assets/subjects/environmental-science.svg"
   }
 ]
