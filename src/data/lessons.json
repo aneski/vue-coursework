@@ -1,0 +1,66 @@
+[
+  {
+    "id": "coding-lab",
+    "title": "Creative Coding Lab",
+    "description": "Build playful mini-apps with JavaScript fundamentals and design-first thinking.",
+    "location": "Innovation Studio",
+    "spaces": 12,
+    "image": "💡"
+  },
+  {
+    "id": "story-champs",
+    "title": "Storytelling Champs",
+    "description": "Craft short stories and zines while exploring tone, pacing, and illustration.",
+    "location": "Media Loft",
+    "spaces": 9,
+    "image": "📚"
+  },
+  {
+    "id": "makers-lab",
+    "title": "Mini Makers Lab",
+    "description": "Hands-on building sessions using cardboard engineering and simple circuits.",
+    "location": "Fabrication Hub",
+    "spaces": 10,
+    "image": "🛠️"
+  },
+  {
+    "id": "kitchen-chem",
+    "title": "Kitchen Chemistry",
+    "description": "Tasty science demos that explain reactions using everyday ingredients.",
+    "location": "Test Kitchen",
+    "spaces": 8,
+    "image": "🧪"
+  },
+  {
+    "id": "movement-mix",
+    "title": "Movement Mix",
+    "description": "Blend yoga, hip-hop, and stretching sequences for balance and expression.",
+    "location": "Dance Loft",
+    "spaces": 14,
+    "image": "🎶"
+  },
+  {
+    "id": "art-sprint",
+    "title": "Art Sprint Studio",
+    "description": "Rapid-fire prompts challenge students to sketch bold concepts in minutes.",
+    "location": "Atelier 3",
+    "spaces": 11,
+    "image": "🎨"
+  },
+  {
+    "id": "robot-rally",
+    "title": "Robot Rally",
+    "description": "Team up to prototype bots that navigate colorful obstacle courses.",
+    "location": "Robotics Arena",
+    "spaces": 7,
+    "image": "🤖"
+  },
+  {
+    "id": "garden-chefs",
+    "title": "Garden Chefs",
+    "description": "Grow herbs, harvest greens, and cook vibrant snacks from the garden.",
+    "location": "Learning Garden",
+    "spaces": 13,
+    "image": "🌱"
+  }
+]
