@@ -1,5 +1,5 @@
 {
-  "name": "coursework-sem1",
+  "name": "vue-frontend",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
+    "mongodb": "^7.0.0",
     "vite": "^7.1.11",
     "vite-plugin-vue-devtools": "^8.0.3"
   }
