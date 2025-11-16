@@ -32,7 +32,7 @@ const sortKey = ref('subject')
 const sortOrder = ref('asc')
 const cartOpen = ref(false)
 
-const { cart, addToCart, updateQuantity, removeFromCart, clearCart, getCartCount, setUserInfo } = useCart()
+const { cart, addToCart, updateQuantity, removeFromCart, clearCart, getCartCount, getCartTotal, setUserInfo } = useCart()
 
 const reservationsMap = computed(() => {
   return cart.items.reduce((acc, item) => {
@@ -58,6 +58,7 @@ const displayLessons = computed(() => {
 })
 
 const cartCount = computed(() => getCartCount())
+const cartTotal = computed(() => getCartTotal())
 const hasItems = computed(() => cart.items.length > 0)
 
 function handleReserve(lesson) {
@@ -183,6 +184,7 @@ onMounted(async () => {
           <CartPanel
             :items="cart.items"
             :total-count="cartCount"
+            :total-price="cartTotal"
             @change-quantity="handleQuantityChange"
             @remove="handleRemove"
             @clear="handleClear"

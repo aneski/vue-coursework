@@ -23,7 +23,7 @@
         <div>
           <p class="cart-item__title">
             {{ item.subject }}
-            <span class="cart-item__price">$ {{ item.price }}</span>
+            <span class="cart-item__price">£{{ item.price }}</span>
           </p>
           <p class="cart-item__meta">
             {{ item.location }} • {{ item.spaces - item.quantity }} spots left
@@ -49,10 +49,20 @@
         </div>
       </li>
     </ul>
+
+    <div v-if="items.length" class="cart-panel__summary">
+      <div>
+        <p class="cart-panel__summary-label">Subtotal</p>
+        <p class="cart-panel__summary-value">£{{ formattedTotal }}</p>
+      </div>
+      <p class="cart-panel__summary-hint">Taxes calculated at checkout</p>
+    </div>
   </section>
 </template>
 
 <script setup>
+import { computed } from 'vue'
+
 const props = defineProps({
   items: {
     type: Array,
@@ -61,10 +71,17 @@ const props = defineProps({
   totalCount: {
     type: Number,
     default: 0
+  },
+  totalPrice: {
+    type: Number,
+    default: 0
   }
 })
 
 const emit = defineEmits(['change-quantity', 'remove', 'clear'])
+
+const total = computed(() => Number(props.totalPrice ?? 0))
+const formattedTotal = computed(() => total.value.toFixed(2))
 
 function emitQuantity(item, nextQuantity) {
   emit('change-quantity', {
@@ -123,6 +140,34 @@ header h3 {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.cart-panel__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.cart-panel__summary-label {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cart-panel__summary-value {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.cart-panel__summary-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .cart-item {
