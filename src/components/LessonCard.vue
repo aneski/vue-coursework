@@ -1,4 +1,5 @@
 <template>
+  <!-- LessonCard: displays a single lesson with image, details, and reserve button -->
   <article class="lesson-card">
     <div class="lesson-card__badge" aria-hidden="true">
       <img :src="imageSrc" :alt="`${lesson.subject} image`" />
@@ -36,6 +37,7 @@
 <script setup>
 import { computed } from 'vue'
 
+// Props: lesson object, reserved count (how many are already in cart)
 const props = defineProps({
   lesson: {
     type: Object,
@@ -47,6 +49,7 @@ const props = defineProps({
   }
 })
 
+// Compute image src: handle full URLs, root-relative, or local asset paths
 const imageSrc = computed(() => {
   const raw = props.lesson.image
   if (!raw) return ''
@@ -63,6 +66,7 @@ const imageSrc = computed(() => {
   }
 })
 
+// Compute remaining seats, never negative
 const seatsLeft = computed(() => {
   const remaining = (props.lesson.spaces ?? 0) - props.reserved
   return remaining > 0 ? remaining : 0

@@ -1,4 +1,5 @@
 <template>
+  <!-- CheckoutPanel: collects guardian info and emits checkout data -->
   <section class="checkout-panel">
     <header>
       <div>
@@ -56,6 +57,7 @@
 <script setup>
 import { computed, reactive, watch } from 'vue'
 
+// Props: disabled flag (e.g., empty cart), initialInfo to pre-fill form
 const props = defineProps({
   disabled: {
     type: Boolean,
@@ -66,19 +68,22 @@ const props = defineProps({
     default: () => ({
       name: '',
       email: '',
-      phone: ''
+    phone: ''
     })
   }
 })
 
+// Emit submit event with form data to parent
 const emit = defineEmits(['submit'])
 
+// Reactive form bound to inputs; initialized from initialInfo prop
 const form = reactive({
   name: props.initialInfo.name,
   email: props.initialInfo.email,
   phone: props.initialInfo.phone
 })
 
+// Sync form if parent updates initialInfo after mount
 watch(
   () => props.initialInfo,
   (next) => {
@@ -89,9 +94,11 @@ watch(
   { deep: true }
 )
 
+// Simple validation patterns: name (letters only), phone (digits only)
 const namePattern = /^[A-Za-z\s]+$/
 const phonePattern = /^[0-9]+$/
 
+// Computed validation state; submit is disabled if invalid
 const isValid = computed(() => {
   const name = form.name.trim()
   const phone = form.phone.trim()
@@ -100,6 +107,7 @@ const isValid = computed(() => {
   return nameOk && phoneOk
 })
 
+// Emit form data to parent on submit if valid and not disabled
 function submit() {
   if (props.disabled || !isValid.value) return
   emit('submit', { ...form })

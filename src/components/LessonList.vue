@@ -1,4 +1,5 @@
 <template>
+  <!-- LessonList: renders searchable/sortable lesson grid with loading/error states -->
   <section class="lesson-list">
     <header class="lesson-list__header">
       <div>
@@ -64,6 +65,7 @@
 import { computed, ref, watch } from 'vue'
 import LessonCard from './LessonCard.vue'
 
+// Props: lessons array, loading/error flags, reservations map, sort key/order
 const props = defineProps({
   lessons: {
     type: Array,
@@ -91,15 +93,18 @@ const props = defineProps({
   }
 })
 
+// Emit events to parent: reserve, update:sortKey, update:sortOrder, search-change
 const emit = defineEmits(['reserve', 'update:sortKey', 'update:sortOrder', 'search-change'])
 
 // Local search query used to filter the lessons list on the client.
 const searchQuery = ref('')
 
+// When searchQuery changes, emit to parent for optional backend search
 watch(searchQuery, (value) => {
   emit('search-change', value)
 })
 
+// Client-side filter by subject or location (case-insensitive)
 const filteredLessons = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
   if (!query) {
@@ -113,8 +118,10 @@ const filteredLessons = computed(() => {
   })
 })
 
+// Get reserved count for a lesson key from the reservations map
 const getReserved = (lessonKey) => props.reservations[lessonKey] ?? 0
 
+// Computed refs for v-model bindings on sort controls
 const sortKeyModel = computed(() => props.sortKey)
 const sortOrderModel = computed(() => props.sortOrder)
 </script>

@@ -1,4 +1,5 @@
 <template>
+  <!-- CartPanel: displays cart items, quantity controls, and subtotal -->
   <section class="cart-panel">
     <header>
       <div>
@@ -63,6 +64,7 @@
 <script setup>
 import { computed } from 'vue'
 
+// Props: items (cart contents), totalCount, totalPrice
 const props = defineProps({
   items: {
     type: Array,
@@ -78,11 +80,14 @@ const props = defineProps({
   }
 })
 
+// Emit events to parent: change-quantity, remove, clear
 const emit = defineEmits(['change-quantity', 'remove', 'clear'])
 
+// Compute formatted total price (2 decimals)
 const total = computed(() => Number(props.totalPrice ?? 0))
 const formattedTotal = computed(() => total.value.toFixed(2))
 
+// Emit quantity change with validation data for parent to enforce limits
 function emitQuantity(item, nextQuantity) {
   emit('change-quantity', {
     key: item.key,
