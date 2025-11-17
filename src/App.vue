@@ -20,6 +20,7 @@ const makeLessonKey = (lesson, index = 0) => {
   return composite || `lesson-${index}`
 }
 
+// Attach a stable key to each lesson so the cart can reference lessons reliably.
 const normalizeLessons = (source) =>
   source.map((lesson, index) => ({ ...lesson, key: makeLessonKey(lesson, index) }))
 
@@ -41,6 +42,8 @@ const reservationsMap = computed(() => {
   }, {})
 })
 
+// When USE_REMOTE is true and API_URL is set, lessons are loaded from the Express backend.
+// Otherwise the app falls back to the bundled JSON in src/data/lessons.json.
 const USE_REMOTE = import.meta.env.VITE_ENABLE_REMOTE === 'true'
 const API_URL = import.meta.env.VITE_API_URL?.trim()
 

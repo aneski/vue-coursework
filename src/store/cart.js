@@ -1,5 +1,6 @@
 import { reactive } from 'vue'
 
+// Simple reactive cart store shared across the app (items + guardian contact info).
 const cart = reactive({
   items: [],
   userInfo: {

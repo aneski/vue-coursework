@@ -93,6 +93,7 @@ const props = defineProps({
 
 defineEmits(['reserve', 'update:sortKey', 'update:sortOrder'])
 
+// Local search query used to filter the lessons list on the client.
 const searchQuery = ref('')
 
 const filteredLessons = computed(() => {
