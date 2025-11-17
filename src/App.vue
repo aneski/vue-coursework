@@ -478,8 +478,4 @@ onMounted(async () => {
     padding: 2rem 1rem 3rem;
   }
 }
-
-function dismissSuccess() {
-  reservationSaved.value = false
-}
 </style>
