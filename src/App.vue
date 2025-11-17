@@ -47,6 +47,38 @@ const reservationsMap = computed(() => {
 const USE_REMOTE = import.meta.env.VITE_ENABLE_REMOTE === 'true'
 const API_URL = import.meta.env.VITE_API_URL?.trim()
 
+const searchTerm = ref('')
+
+async function fetchLessonsFromServer(query = '') {
+  const base = API_URL?.replace(/\/$/, '')
+  if (!base) return
+
+  loading.value = true
+  error.value = ''
+
+  try {
+    const url = query
+      ? `${base}/search?q=${encodeURIComponent(query)}`
+      : `${base}/lessons`
+
+    const response = await fetch(url)
+    if (!response.ok) {
+      throw new Error(`Lessons request failed with status ${response.status}`)
+    }
+
+    const payload = await response.json()
+    if (Array.isArray(payload)) {
+      lessons.value = normalizeLessons(payload)
+    }
+  } catch (err) {
+    console.warn('[App] Backend request failed, falling back to local lessons.json:', err)
+    error.value = 'Unable to load lessons from the server. Showing local lessons instead.'
+    lessons.value = normalizeLessons(lessonsData)
+  } finally {
+    loading.value = false
+  }
+}
+
 const displayLessons = computed(() => {
   const key = sortKey.value
   const direction = sortOrder.value === 'asc' ? 1 : -1
@@ -82,9 +114,72 @@ function handleClear() {
   reservationSaved.value = false
 }
 
-function handleCheckout(info) {
+async function handleCheckout(info) {
   setUserInfo(info)
-  reservationSaved.value = true
+  reservationSaved.value = false
+
+  // Local-only mode: act as before without calling the backend.
+  if (!USE_REMOTE || !API_URL) {
+    reservationSaved.value = true
+    return
+  }
+
+  const base = API_URL.replace(/\/$/, '')
+
+  const itemsPayload = cart.items
+    .filter((item) => item.id)
+    .map((item) => ({
+      lessonId: item.id,
+      spaces: item.quantity
+    }))
+
+  if (!itemsPayload.length) {
+    // No backend IDs available; fall back to local-only behaviour.
+    reservationSaved.value = true
+    return
+  }
+
+  try {
+    const orderResponse = await fetch(`${base}/orders`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: info.name,
+        email: info.email,
+        phone: info.phone,
+        items: itemsPayload
+      })
+    })
+
+    if (!orderResponse.ok) {
+      throw new Error(`Order request failed with status ${orderResponse.status}`)
+    }
+
+    // Update lesson spaces locally and on the backend.
+    for (const item of cart.items) {
+      const index = lessons.value.findIndex((lesson) => lesson.key === item.key)
+      if (index === -1) continue
+
+      const lesson = lessons.value[index]
+      const currentSpaces = Number(lesson.spaces ?? 0)
+      const newSpaces = Math.max(0, currentSpaces - item.quantity)
+
+      lessons.value[index] = { ...lesson, spaces: newSpaces }
+
+      if (lesson.id) {
+        await fetch(`${base}/lessons/${lesson.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ spaces: newSpaces })
+        })
+      }
+    }
+
+    reservationSaved.value = true
+  } catch (err) {
+    console.error('[App] Checkout failed:', err)
+    error.value = 'Order could not be saved to the server. Your cart is still available.'
+  }
 }
 
 function toggleCart() {
@@ -94,6 +189,22 @@ function toggleCart() {
 
 function closeCart() {
   cartOpen.value = false
+}
+
+function handleSearchChange(value) {
+  searchTerm.value = value
+
+  if (!USE_REMOTE || !API_URL) {
+    // Local mode keeps using the built-in client-side filter in LessonList.
+    return
+  }
+
+  // Fire a backend search as the user types.
+  fetchLessonsFromServer(value)
+}
+
+function dismissSuccess() {
+  reservationSaved.value = false
 }
 
 watch(hasItems, (next) => {
@@ -109,26 +220,7 @@ onMounted(async () => {
     return
   }
 
-  loading.value = true
-  error.value = ''
-
-  try {
-    const response = await fetch(`${API_URL.replace(/\/$/, '')}/lessons`)
-    if (!response.ok) {
-      throw new Error(`Lessons request failed with status ${response.status}`)
-    }
-
-    const payload = await response.json()
-    if (Array.isArray(payload) && payload.length) {
-      lessons.value = normalizeLessons(payload)
-    }
-  } catch (err) {
-    console.warn('[App] Falling back to local lessons.json:', err)
-    error.value = 'Unable to load lessons from the server. Showing local lessons instead.'
-    lessons.value = normalizeLessons(lessonsData)
-  } finally {
-    loading.value = false
-  }
+  await fetchLessonsFromServer('')
 })
 </script>
 
@@ -200,9 +292,11 @@ onMounted(async () => {
             @submit="handleCheckout"
           />
 
-          <p v-if="reservationSaved" class="toast" role="status">
-            Order submitted. We will sync it once the backend is live.
-          </p>
+          <div v-if="reservationSaved" class="toast" role="dialog" aria-label="Checkout successful">
+            <h4>Checkout successful</h4>
+            <p>Your reservation has been saved. We'll sync it with the backend shortly.</p>
+            <button type="button" @click="dismissSuccess">Close</button>
+          </div>
         </aside>
       </div>
     </transition>
@@ -306,6 +400,27 @@ onMounted(async () => {
   box-shadow: 0 15px 30px rgba(22, 101, 52, 0.15);
 }
 
+.toast h4 {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+}
+
+.toast p {
+  margin: 0 0 0.75rem;
+  font-weight: 400;
+}
+
+.toast button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: #166534;
+  color: #f9fafb;
+  cursor: pointer;
+}
+
 .drawer-enter-active,
 .drawer-leave-active {
   transition: opacity 0.25s ease;
@@ -362,5 +477,9 @@ onMounted(async () => {
   .page {
     padding: 2rem 1rem 3rem;
   }
+}
+
+function dismissSuccess() {
+  reservationSaved.value = false
 }
 </style>
