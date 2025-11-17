@@ -1,5 +1,11 @@
 <template>
-  <!-- CheckoutPanel: collects guardian info and emits checkout data -->
+  <!-- CheckoutPanel: Collects guardian contact info and emits checkout data.
+       - Shows a disabled state when the cart is empty.
+       - Pre-fills form fields if initialInfo prop is provided.
+       - Validates name (letters only) and phone (digits only).
+       - Emits submit with form data on valid submission.
+       - Email is optional but included for completeness.
+  -->
   <section class="checkout-panel">
     <header>
       <div>
@@ -58,6 +64,8 @@
 import { computed, reactive, watch } from 'vue'
 
 // Props: disabled flag (e.g., empty cart), initialInfo to pre-fill form
+// - disabled: When true, all inputs and the submit button are disabled.
+// - initialInfo: Object with {name, email, phone} to pre-populate the form.
 const props = defineProps({
   disabled: {
     type: Boolean,
@@ -68,15 +76,17 @@ const props = defineProps({
     default: () => ({
       name: '',
       email: '',
-    phone: ''
+      phone: ''
     })
   }
 })
 
 // Emit submit event with form data to parent
+// Payload: {name, email, phone} (trimmed strings).
 const emit = defineEmits(['submit'])
 
 // Reactive form bound to inputs; initialized from initialInfo prop
+// Updates in real time as user types; parent can reset via initialInfo changes.
 const form = reactive({
   name: props.initialInfo.name,
   email: props.initialInfo.email,
@@ -84,6 +94,7 @@ const form = reactive({
 })
 
 // Sync form if parent updates initialInfo after mount
+// Ensures the form stays in sync if parent clears or changes info post-render.
 watch(
   () => props.initialInfo,
   (next) => {
@@ -95,10 +106,12 @@ watch(
 )
 
 // Simple validation patterns: name (letters only), phone (digits only)
+// Email is optional; basic HTML5 email type provides browser validation.
 const namePattern = /^[A-Za-z\s]+$/
 const phonePattern = /^[0-9]+$/
 
 // Computed validation state; submit is disabled if invalid
+// Name must contain only letters and spaces; phone must be digits only.
 const isValid = computed(() => {
   const name = form.name.trim()
   const phone = form.phone.trim()
@@ -108,6 +121,7 @@ const isValid = computed(() => {
 })
 
 // Emit form data to parent on submit if valid and not disabled
+// Trims values before emission; parent handles further validation/saving.
 function submit() {
   if (props.disabled || !isValid.value) return
   emit('submit', { ...form })

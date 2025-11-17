@@ -1,5 +1,12 @@
 <template>
-  <!-- LessonCard: displays a single lesson with image, details, and reserve button -->
+  <!-- LessonCard: Displays a single lesson with image, details, and reserve button.
+       - Shows lesson image in a styled badge; gracefully handles missing images.
+       - Displays subject, location, price, and total spaces.
+       - Indicates availability with a colored dot and spots left text.
+       - Shows how many spaces are already reserved (if any).
+       - Disables the reserve button when no spots remain.
+       - Emits 'reserve' with the full lesson object on button click.
+  -->
   <article class="lesson-card">
     <div class="lesson-card__badge" aria-hidden="true">
       <img :src="imageSrc" :alt="`${lesson.subject} image`" />
@@ -38,6 +45,8 @@
 import { computed } from 'vue'
 
 // Props: lesson object, reserved count (how many are already in cart)
+// - lesson: Must include at least {subject, location, price, spaces, image}.
+// - reserved: Number of spaces already in cart; used to compute remaining seats.
 const props = defineProps({
   lesson: {
     type: Object,
@@ -50,6 +59,9 @@ const props = defineProps({
 })
 
 // Compute image src: handle full URLs, root-relative, or local asset paths
+// 1) If image is a full HTTP(S) URL or starts with '/', use it as-is.
+// 2) Otherwise, resolve relative to the component's module URL (Vite asset handling).
+// Returns empty string on failure to avoid broken image UI.
 const imageSrc = computed(() => {
   const raw = props.lesson.image
   if (!raw) return ''
@@ -67,6 +79,8 @@ const imageSrc = computed(() => {
 })
 
 // Compute remaining seats, never negative
+// Uses lesson.spaces (total) minus reserved count (in cart).
+// If lesson.spaces is missing/undefined, treats it as 0.
 const seatsLeft = computed(() => {
   const remaining = (props.lesson.spaces ?? 0) - props.reserved
   return remaining > 0 ? remaining : 0

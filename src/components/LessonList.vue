@@ -1,5 +1,12 @@
 <template>
-  <!-- LessonList: renders searchable/sortable lesson grid with loading/error states -->
+  <!-- LessonList: Renders a searchable, sortable grid of lesson cards.
+       - Shows header with description and controls for search/sort.
+       - Displays skeleton placeholders while loading.
+       - Shows error message if backend request fails.
+       - Shows 'all full' message if no lessons match filters.
+       - For each lesson, renders LessonCard with reserved count and reserve handler.
+       - Emits search-change as user types (for optional backend search).
+  -->
   <section class="lesson-list">
     <header class="lesson-list__header">
       <div>
@@ -66,6 +73,11 @@ import { computed, ref, watch } from 'vue'
 import LessonCard from './LessonCard.vue'
 
 // Props: lessons array, loading/error flags, reservations map, sort key/order
+// - lessons: Array of lesson objects to display.
+// - loading: When true, show skeleton UI instead of real lessons.
+// - error: Error message string; if truthy, show error state.
+// - reservations: Map {lessonKey: quantity} indicating how many spaces are in cart.
+// - sortKey/sortOrder: Current sort field and direction; controlled by parent.
 const props = defineProps({
   lessons: {
     type: Array,
@@ -94,17 +106,24 @@ const props = defineProps({
 })
 
 // Emit events to parent: reserve, update:sortKey, update:sortOrder, search-change
+// - reserve: Payload is the lesson object the user wants to add to cart.
+// - update:sortKey/update:sortOrder: New values for v-model bindings.
+// - search-change: Emitted as user types (debounced by parent if needed).
 const emit = defineEmits(['reserve', 'update:sortKey', 'update:sortOrder', 'search-change'])
 
 // Local search query used to filter the lessons list on the client.
+// Mirrors input value; changes trigger search-change emission for optional backend search.
 const searchQuery = ref('')
 
 // When searchQuery changes, emit to parent for optional backend search
+// Parent may choose to debounce and perform a backend search or ignore.
 watch(searchQuery, (value) => {
   emit('search-change', value)
 })
 
 // Client-side filter by subject or location (case-insensitive)
+// If query is empty, returns unsorted lessons list (parent handles sorting).
+// Otherwise, filters on subject or location containing the query substring.
 const filteredLessons = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
   if (!query) {
@@ -119,9 +138,11 @@ const filteredLessons = computed(() => {
 })
 
 // Get reserved count for a lesson key from the reservations map
+// Returns 0 if lessonKey not found (no spaces in cart).
 const getReserved = (lessonKey) => props.reservations[lessonKey] ?? 0
 
 // Computed refs for v-model bindings on sort controls
+// Allows parent to control sort state via v-model.
 const sortKeyModel = computed(() => props.sortKey)
 const sortOrderModel = computed(() => props.sortOrder)
 </script>

@@ -1,5 +1,12 @@
 <template>
-  <!-- CartPanel: displays cart items, quantity controls, and subtotal -->
+  <!-- CartPanel: Displays cart items with per-item quantity controls and a subtotal.
+       - Shows empty message when no items.
+       - Each item shows subject, price, location, and remaining spots.
+       - Quantity controls enforce min/max via disabled states.
+       - Emits change-quantity with payload {key, quantity, limit} for parent validation.
+       - Remove and clear-all actions are exposed as events.
+       - Subtotal is formatted to two decimals.
+  -->
   <section class="cart-panel">
     <header>
       <div>
@@ -65,6 +72,9 @@
 import { computed } from 'vue'
 
 // Props: items (cart contents), totalCount, totalPrice
+// - items: Array of lesson objects with key, subject, price, location, spaces, quantity.
+// - totalCount: Total number of items across the cart (used for UI display).
+// - totalPrice: Numeric total price; may be 0 or undefined.
 const props = defineProps({
   items: {
     type: Array,
@@ -81,13 +91,20 @@ const props = defineProps({
 })
 
 // Emit events to parent: change-quantity, remove, clear
+// - change-quantity: Payload {key, quantity, limit} so parent can enforce business rules.
+// - remove: Payload lessonKey to remove a single cart line.
+// - clear: No payload; empties the entire cart.
 const emit = defineEmits(['change-quantity', 'remove', 'clear'])
 
 // Compute formatted total price (2 decimals)
+// Handles undefined/null by coercing to 0; ensures consistent formatting.
 const total = computed(() => Number(props.totalPrice ?? 0))
 const formattedTotal = computed(() => total.value.toFixed(2))
 
 // Emit quantity change with validation data for parent to enforce limits
+// - item: The cart line being changed.
+// - nextQuantity: Desired new quantity (may be invalid; parent decides).
+// - limit: Maximum allowed (lesson.spaces); included for convenience.
 function emitQuantity(item, nextQuantity) {
   emit('change-quantity', {
     key: item.key,
