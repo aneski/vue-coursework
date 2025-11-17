@@ -168,6 +168,7 @@ onMounted(async () => {
         :reservations="reservationsMap"
         v-model:sortKey="sortKey"
         v-model:sortOrder="sortOrder"
+        @search-change="handleSearchChange"
         @reserve="handleReserve"
       />
     </main>

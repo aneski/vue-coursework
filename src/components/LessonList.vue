@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import LessonCard from './LessonCard.vue'
 
 const props = defineProps({
@@ -91,10 +91,14 @@ const props = defineProps({
   }
 })
 
-defineEmits(['reserve', 'update:sortKey', 'update:sortOrder'])
+const emit = defineEmits(['reserve', 'update:sortKey', 'update:sortOrder', 'search-change'])
 
 // Local search query used to filter the lessons list on the client.
 const searchQuery = ref('')
+
+watch(searchQuery, (value) => {
+  emit('search-change', value)
+})
 
 const filteredLessons = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
