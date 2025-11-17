@@ -5,7 +5,7 @@
     "location": "Room 204",
     "price": 38,
     "spaces": 5,
-    "image": "../assets/subjects/algebra.svg"
+    "image": "https://www.svgrepo.com/show/311604/math.svg"
   },
   {
     "subject": "Biology Lab",
@@ -13,7 +13,7 @@
     "location": "Science Lab B",
     "price": 42,
     "spaces": 5,
-    "image": "../assets/subjects/biology.svg"
+    "image": "https://www.svgrepo.com/show/385149/biology-experiment-lab-laboratory-research-science.svg"
   },
   {
     "subject": "Chemistry Honors",
@@ -21,7 +21,7 @@
     "location": "Chemistry Lab",
     "price": 44,
     "spaces": 5,
-    "image": "../assets/subjects/chemistry.svg"
+    "image": "https://www.svgrepo.com/show/82732/chemistry-lab-instruments.svg"
   },
   {
     "subject": "Physics Workshop",
@@ -29,7 +29,7 @@
     "location": "Innovation Studio",
     "price": 46,
     "spaces": 5,
-    "image": "../assets/subjects/physics.svg"
+    "image": "https://www.svgrepo.com/show/197819/physics-science.svg"
   },
   {
     "subject": "English Literature",
@@ -37,7 +37,7 @@
     "location": "Library Commons",
     "price": 36,
     "spaces": 5,
-    "image": "../assets/subjects/english-literature.svg"
+    "image": "https://www.svgrepo.com/show/230246/books-literature.svg"
   },
   {
     "subject": "World History",
@@ -45,7 +45,7 @@
     "location": "Room 112",
     "price": 34,
     "spaces": 5,
-    "image": "../assets/subjects/world-history.svg"
+    "image": "https://www.svgrepo.com/show/520522/globe.svg"
   },
   {
     "subject": "Computer Science Principles",
@@ -53,7 +53,7 @@
     "location": "Tech Lab",
     "price": 48,
     "spaces": 5,
-    "image": "../assets/subjects/computer-science.svg"
+    "image": "https://www.svgrepo.com/show/294200/coding-programming-language.svg"
   },
   {
     "subject": "French Conversation",
@@ -61,7 +61,7 @@
     "location": "Language Studio",
     "price": 33,
     "spaces": 5,
-    "image": "../assets/subjects/french.svg"
+    "image": "https://www.svgrepo.com/show/43090/french.svg"
   },
   {
     "subject": "Studio Art",
@@ -69,7 +69,7 @@
     "location": "Art Atelier",
     "price": 40,
     "spaces": 5,
-    "image": "../assets/subjects/studio-art.svg"
+    "image": "https://www.svgrepo.com/show/205590/paint-palette-art-and-design.svg"
   },
   {
     "subject": "Music Ensemble",
@@ -77,7 +77,7 @@
     "location": "Music Room",
     "price": 37,
     "spaces": 5,
-    "image": "../assets/subjects/music.svg"
+    "image": "https://www.svgrepo.com/show/109458/music-notes.svg"
   },
   {
     "subject": "AP Economics",
@@ -85,7 +85,7 @@
     "location": "Room 305",
     "price": 45,
     "spaces": 5,
-    "image": "../assets/subjects/economics.svg"
+    "image": "https://www.svgrepo.com/show/11834/economy.svg"
   },
   {
     "subject": "Health & Wellness",
@@ -93,7 +93,7 @@
     "location": "Wellness Center",
     "price": 32,
     "spaces": 5,
-    "image": "../assets/subjects/health.svg"
+    "image": "https://www.svgrepo.com/show/339260/heart-health.svg"
   },
   {
     "subject": "Environmental Science",
@@ -101,6 +101,6 @@
     "location": "Greenhouse Lab",
     "price": 41,
     "spaces": 5,
-    "image": "../assets/subjects/environmental-science.svg"
+    "image": "https://www.svgrepo.com/show/456300/leaf-globe.svg"
   }
 ]

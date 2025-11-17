@@ -48,8 +48,16 @@ const props = defineProps({
 })
 
 const imageSrc = computed(() => {
+  const raw = props.lesson.image
+  if (!raw) return ''
+
+  // If the backend provides a full URL or a root-relative path, use it as-is
+  if (typeof raw === 'string' && (raw.startsWith('http://') || raw.startsWith('https://') || raw.startsWith('/'))) {
+    return raw
+  }
+
   try {
-    return new URL(props.lesson.image, import.meta.url).href
+    return new URL(raw, import.meta.url).href
   } catch (e) {
     return ''
   }
