@@ -23,7 +23,6 @@ This is a coursework project featuring a full-styled front-end application built
 ## Technologies Used
 
 - Vue 3 with Composition API
-- Vue Router 4 for navigation
 - Vite for fast development and building
 - Modern CSS with gradients and animations
 
