@@ -66,9 +66,20 @@ const imageSrc = computed(() => {
   const raw = props.lesson.image
   if (!raw) return ''
 
-  // If the backend provides a full URL or a root-relative path, use it as-is
-  if (typeof raw === 'string' && (raw.startsWith('http://') || raw.startsWith('https://') || raw.startsWith('/'))) {
-    return raw
+  const apiUrl = import.meta.env.VITE_API_URL && import.meta.env.VITE_API_URL.trim()
+
+  if (typeof raw === 'string') {
+    if (raw.startsWith('http://') || raw.startsWith('https://')) {
+      return raw
+    }
+
+    if (raw.startsWith('/images/')) {
+      if (apiUrl) {
+        const base = apiUrl.replace(/\/$/, '')
+        return `${base}${raw}`
+      }
+      return raw
+    }
   }
 
   try {

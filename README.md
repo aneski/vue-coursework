@@ -2,6 +2,23 @@
 
 A modern web application for students and parents to browse and purchase after-school classes and activities.
 
+
+## Repositories and Live URLs 
+
+- **[Vue.js App] GitHub Repository**  
+  `https://github.com/aneski/vue-coursework`
+
+- **[Vue.js App] GitHub Pages URL**  
+  `https://aneski.github.io/vue-coursework/`
+
+- **[Express.js App] GitHub Repository**  
+  `https://github.com/aneski/express-coursework`
+
+- **[AWS / Render Express API] URL that returns all lessons**  
+  `https://aneskibackend.onrender.com/lessons`
+
+
+  
 ## About
 
 This is a coursework project featuring a full-styled front-end application built with Vue 3 and Vite. The application allows students and their parents to:
@@ -30,14 +47,6 @@ This is a coursework project featuring a full-styled front-end application built
 
 [VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
 
 ## Customize configuration
 
