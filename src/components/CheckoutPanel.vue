@@ -15,7 +15,7 @@
           We will sync these details with the backend as soon as it is online.
         </p>
       </div>
-      <span class="tag" :class="{ 'tag--disabled': disabled }">
+      <span class="status-badge" :class="{ 'status-badge--disabled': disabled }">
         {{ disabled ? 'Cart empty' : 'Ready' }}
       </span>
     </header>
@@ -139,6 +139,14 @@ function submit() {
   border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
+.eyebrow {
+  color: #334155;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0;
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -150,16 +158,27 @@ h3 {
   margin: 0.25rem 0;
 }
 
-.tag {
-  border-radius: 999px;
-  padding: 0.35rem 0.9rem;
-  font-size: 0.85rem;
-  background: #10b981;
-  color: white;
+.subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: #475569;
 }
 
-.tag--disabled {
-  background: #94a3b8;
+.status-badge {
+  border-radius: 8px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+  pointer-events: none;
+}
+
+.status-badge--disabled {
+  background: rgba(148, 163, 184, 0.15);
+  color: #64748b;
 }
 
 .checkout-form {

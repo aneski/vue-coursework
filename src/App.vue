@@ -155,27 +155,23 @@ async function handleCheckout(info) {
       throw new Error(`Order request failed with status ${orderResponse.status}`)
     }
 
-    // Update lesson spaces locally and on the backend.
+    // Update lesson spaces on the backend only - local availability is handled by cart
     for (const item of cart.items) {
-      const index = lessons.value.findIndex((lesson) => lesson.key === item.key)
-      if (index === -1) continue
+      const lesson = lessons.value.find((l) => l.key === item.key)
+      if (!lesson || !lesson.id) continue
 
-      const lesson = lessons.value[index]
       const currentSpaces = Number(lesson.spaces ?? 0)
       const newSpaces = Math.max(0, currentSpaces - item.quantity)
 
-      lessons.value[index] = { ...lesson, spaces: newSpaces }
-
-      if (lesson.id) {
-        await fetch(`${base}/lessons/${lesson.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ spaces: newSpaces })
-        })
-      }
+      await fetch(`${base}/lessons/${lesson.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ spaces: newSpaces })
+      })
     }
 
     reservationSaved.value = true
+    clearCart()
   } catch (err) {
     console.error('[App] Checkout failed:', err)
     error.value = 'Order could not be saved to the server. Your cart is still available.'
@@ -440,7 +436,7 @@ onMounted(async () => {
 .drawer__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(15, 23, 42, 0.45);
+  background: rgba(15, 23, 42, 0.6);
 }
 
 .drawer__panel {
@@ -463,6 +459,14 @@ onMounted(async () => {
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
+}
+
+.drawer__header .eyebrow {
+  color: #334155;
+}
+
+.drawer__header h3 {
+  color: #0f172a;
 }
 
 .drawer__close {

@@ -125,6 +125,14 @@ function emitQuantity(item, nextQuantity) {
   gap: 1.25rem;
 }
 
+.eyebrow {
+  color: #e2e8f0;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0;
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -138,7 +146,7 @@ header h3 {
 
 .btn-link {
   background: transparent;
-  color: rgba(255, 255, 255, 0.8);
+  color: #e2e8f0;
   padding: 0;
   text-decoration: underline;
 }
@@ -175,7 +183,7 @@ header h3 {
 .cart-panel__summary-label {
   margin: 0;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: #cbd5e1;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -189,7 +197,7 @@ header h3 {
 .cart-panel__summary-hint {
   margin: 0;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: #94a3b8;
 }
 
 .cart-item {
@@ -213,12 +221,12 @@ header h3 {
 .cart-item__price {
   margin-left: 0.4rem;
   font-weight: 500;
-  color: rgba(248, 250, 252, 0.9);
+  color: #f1f5f9;
 }
 
 .cart-item__meta {
   margin: 0.15rem 0 0;
-  color: rgba(255, 255, 255, 0.7);
+  color: #cbd5e1;
   font-size: 0.9rem;
 }
 

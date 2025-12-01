@@ -6,16 +6,16 @@ A modern web application for students and parents to browse and purchase after-s
 ## Repositories and Live URLs 
 
 - **[Vue.js App] GitHub Repository**  
-  `https://github.com/aneski/vue-coursework`
+  [https://github.com/aneski/vue-coursework](https://github.com/aneski/vue-coursework)
 
 - **[Vue.js App] GitHub Pages URL**  
-  `https://aneski.github.io/vue-coursework/`
+  [https://aneski.github.io/vue-coursework/](https://aneski.github.io/vue-coursework/)
 
 - **[Express.js App] GitHub Repository**  
-  `https://github.com/aneski/express-coursework`
+  [https://github.com/aneski/express-coursework](https://github.com/aneski/express-coursework)
 
 - **[AWS / Render Express API] URL that returns all lessons**  
-  `https://aneskibackend.onrender.com/lessons`
+  [https://aneskibackend.onrender.com/lessons](https://aneskibackend.onrender.com/lessons)
 
 
   
