@@ -18,7 +18,7 @@ const makeLessonKey = (lesson, index = 0) => {
   const locationSlug = toSlug(lesson.location)
   const composite = [subjectSlug, locationSlug].filter(Boolean).join('-')
   return composite || `lesson-${index}`
-
+}
 
 // Attach a stable key to each lesson so the cart can reference lessons reliably.
 const normalizeLessons = (source) =>
