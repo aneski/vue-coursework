@@ -18,7 +18,7 @@ const makeLessonKey = (lesson, index = 0) => {
   const locationSlug = toSlug(lesson.location)
   const composite = [subjectSlug, locationSlug].filter(Boolean).join('-')
   return composite || `lesson-${index}`
-}
+
 
 // Attach a stable key to each lesson so the cart can reference lessons reliably.
 const normalizeLessons = (source) =>
@@ -118,8 +118,21 @@ async function handleCheckout(info) {
   setUserInfo(info)
   reservationSaved.value = false
 
-  // Local-only mode: act as before without calling the backend.
+  // Helper to update local lesson spaces after checkout
+  function updateLocalLessonSpaces() {
+    for (const item of cart.items) {
+      const lesson = lessons.value.find((l) => l.key === item.key)
+      if (lesson) {
+        const currentSpaces = Number(lesson.spaces ?? 0)
+        lesson.spaces = Math.max(0, currentSpaces - item.quantity)
+      }
+    }
+  }
+
+  // Local-only mode: update local spaces and clear cart.
   if (!USE_REMOTE || !API_URL) {
+    updateLocalLessonSpaces()
+    clearCart()
     reservationSaved.value = true
     return
   }
@@ -135,6 +148,8 @@ async function handleCheckout(info) {
 
   if (!itemsPayload.length) {
     // No backend IDs available; fall back to local-only behaviour.
+    updateLocalLessonSpaces()
+    clearCart()
     reservationSaved.value = true
     return
   }
@@ -155,19 +170,25 @@ async function handleCheckout(info) {
       throw new Error(`Order request failed with status ${orderResponse.status}`)
     }
 
-    // Update lesson spaces on the backend only - local availability is handled by cart
+    // Update lesson spaces on the backend and locally
     for (const item of cart.items) {
       const lesson = lessons.value.find((l) => l.key === item.key)
-      if (!lesson || !lesson.id) continue
+      if (!lesson) continue
 
       const currentSpaces = Number(lesson.spaces ?? 0)
       const newSpaces = Math.max(0, currentSpaces - item.quantity)
 
-      await fetch(`${base}/lessons/${lesson.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ spaces: newSpaces })
-      })
+      // Update local state immediately
+      lesson.spaces = newSpaces
+
+      // Sync to backend if lesson has an ID
+      if (lesson.id) {
+        await fetch(`${base}/lessons/${lesson.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ spaces: newSpaces })
+        })
+      }
     }
 
     reservationSaved.value = true
